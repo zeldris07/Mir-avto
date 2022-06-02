@@ -1,0 +1,313 @@
+{% load static %} {% load cart_tag %} {% load myfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'sass/style.scss' %}" />
+    <title>market</title>
+  </head>
+  <body>
+    <img src="{% static 'image/bg.jpg' %}" alt="#" class="z_index_img" />
+    <div class="search_block">
+      <h2>Поиск по каталогу</h2>
+            <form class="mobile_search" action="{% url 'search_details' %}" method="get">
+        <input type="text" name="g">
+     <button type="button"> Найти</button>
+      </form>
+    </div>
+    <div class="bg_block"></div>
+    <nav>
+      <div class="container_nav">
+        <div class="burg_menu">
+          <img
+            src="{% static 'icon/134216_menu_lines_hamburger_icon.png' %}"
+            alt=""
+          />
+        </div>
+        <div class="two_block_in_cont_nav first">
+          <div class="six_block_on_top">
+            <a href="{% url 'home' %}">Главная</a>
+          </div>
+          <div class="six_block_on_top">
+            <a href="{% url 'catalog' %}">Каталог автозапчастей</a>
+          </div>
+          <div class="six_block_on_top">
+            <a href="{% url 'delivery' %}">Доставка</a>
+          </div>
+          <div class="six_block_on_top">
+            <a href="{% url 'pay_page' %}">Оплата</a>
+          </div>
+          <div class="six_block_on_top">
+            <a href="{% url 'feedback' %}">Обратная связь</a>
+          </div>
+          <div class="six_block_on_top first_hov_block">
+            <a href="{% url 'contact' %}" class="link_display1">Контакты</a>
+            <a href="{% url 'basket' %}" class="link_display">Корзина</a>
+          </div>
+        </div>
+        <div class="two_block_in_cont_nav second">
+          {% if user.is_authenticated %}
+          <p style="color: #e7bc5a">Добро пожаловать {{user.username}}</p>
+          {% else %}
+          <div class="two_block_log_and_reg log1">
+            <img src="{% static 'icon/3671785_key_icon.png' %}" alt="" />
+            <p><a href="{% url 'login' %}">Вход</a></p>
+          </div>
+
+          <div class="two_block_log_and_reg">
+            <a href="{% url 'register' %}">
+              <img src="{% static 'icon/signup-icon-29.jpg' %}" alt="" />
+              <p>Регистрация</p></a
+            >
+          </div>
+          {% endif %}
+          <div class="two_block_log_and_reg log1 searc_log">
+            <img
+              src="{% static 'icon/211817_search_strong_icon.png' %}"
+              alt=""
+            />
+            <p>Поиск по каталогу</p>
+          </div>
+        </div>
+      </div>
+      <div class="two_block_in_cont_nav first1">
+        <div class="six_block_on_top">
+          <a href="{% url 'home' %}">Главная</a>
+        </div>
+        <div class="six_block_on_top">
+          <a href="{% url 'catalog' %}">Каталог автозапчастей</a>
+        </div>
+        <div class="six_block_on_top">
+          <a href="{% url 'delivery' %}">Доставка</a>
+        </div>
+        <div class="six_block_on_top">
+          <a href="{% url 'pay_page' %}">Оплата</a>
+        </div>
+        <div class="six_block_on_top">
+          <a href="{% url 'feedback' %}">Обратная связь</a>
+        </div>
+        <div class="six_block_on_top first_hov_block">
+          <a href="{% url 'contact' %}">Контакты</a>
+        </div>
+        <div class="six_block_on_top ">
+          <a href="{% url 'basket' %}">Корзина</a>
+        </div>
+      </div>
+    </nav>
+    <header>
+      <div class="header_container">
+        <div class="three_block_in_header_cont first_block_in_header_cont">
+          <div>
+            <img
+              src="{% static 'image/remove_bg.png' %}"
+              alt=""
+            />
+          </div>
+          
+        </div>
+        <div class="three_block_in_header_cont second_block_in_header_cont">
+          <p class="catalog_search">Поиск по каталогу</p>
+          <div class="flex_div">
+            <form
+              class="input-group filter-bar-search flex_div"
+              action="{% url 'search_details' %}"
+              method="get"
+            >
+              <input type="text" name="g" />
+              <button type="button">
+                <img
+                  src="{% static 'icon/211817_search_strong_icon.png' %}"
+                  alt=""
+                />
+                <p>Найти</p>
+              </button>
+            </form>
+          </div>
+          <div class="div_phone">
+            <p class="phone_number">(999)ххх-хх-хх</p>
+            <p class="phone_number">(999)ххх-хх-хх</p>
+          </div>
+        </div>
+        <div class="three_block_in_header_cont third_block_in_header_cont">
+          <div class="two_block_in_header_cont one_block">
+            <p>(999)ххх-хх-хх</p>
+            <p>(999)ххх-хх-хх</p>
+          </div>
+          <div class="two_block_in_header_cont second_header_cont">
+            <p class="display">Каталог</p>
+            <div class="img_and_text">
+              <img
+                src="{% static 'icon/186387_cart_shopping_icon.png' %}"
+                alt=""
+              />
+            </div>
+            <a href="{% url 'basket' %}">
+              <div class="img_and_text">
+                <div class="cart_blocks">
+                  <span>товаров</span>
+                  <span class="quantity one"
+                    >{{request.session.cart|length}}</span
+                  >
+                </div>
+                <div class="cart_blocks">
+               
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="two_flex_block_in_container first_flex_block_in_container">
+        <div class="div_for_aside_blocks">
+          {% for part in parts %}
+          <div class="aside_info_blocks">
+            <a href="{% url 'details' part.list_slug %}" class="aa">
+              <img src="{{part.image.url}}" alt="" />
+              <p class="p1p">{{part.list_name}}</p>
+              <div class="selector_menu">
+                {% for category in part.parent.all %}
+                <p>{{category.category_name}}</p>
+                {% endfor %}
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div
+        class="two_flex_block_in_container second_flex_block_in_container second_page_flex_block"
+      >
+        <div class="box_block"></div>
+        <div class="three_block_grid_and_info">
+          <a href="{% url 'home' %}">Главная</a> <span>/</span>
+          <a href="{% url 'contact' %}"> Контакты</a>
+          <h2>Контакты</h2>
+        </div>
+        <div class="three_block_grid_and_info">
+          <div class="six_block_from_contact">
+            <h2>xxxxxxxxxxxxxxxxxxx</h2>
+            
+          </div>
+          <div class="six_block_from_contact">
+            <h2>Адрес магазина</h2>
+            <p>
+             xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            </p>
+            <p>
+              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            </p>
+            <p>E-mail xxxxxxxxxxxxxxxxxxxxx</p>
+          </div>
+
+          <div class="six_block_from_contact">
+            <h2>Проезд</h2>
+            
+            <p>
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            </p>
+            <button class="bank_rek">Банковские реквизиты</button>
+          </div>
+        </div>
+        <div class="three_block_grid_and_info"></div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer_container">
+        <div class="four_block_in_footer first_footer_block">
+          <a href="{% url 'home' %}"
+            ><img
+              src="{% static 'image/remove_bg.png' %}"
+              alt=""
+          /></a>
+
+          
+        </div>
+        <div class="four_block_in_footer second_footer_block">
+          <p class="phones">Телефоны</p>
+          <p>(999)xxx-xx-xx</p>
+          <p>(999)xxx-xx-xx</p>
+          
+        </div>
+        <div class="four_block_in_footer third_footer_block">
+          <p class="contacts">Контакты</p>
+          <a href="#">
+            самарканд, хххххххх <br />
+            хххххх, хххххххххх, хх 26 хххххххх ххххххх</a
+          >
+        </div>
+        <div class="four_block_in_footer fourth_footer_block">
+          <div class="six_block_in_footer">
+            <a href="{% url 'home' %}">Главная</a>
+          </div>
+          <div class="six_block_in_footer">
+            <a href="{% url 'catalog' %}">Каталог автозапчастей</a>
+          </div>
+          <div class="six_block_in_footer">
+            <a href="{% url 'delivery' %}">доставка</a>
+          </div>
+          <div class="six_block_in_footer">
+            <a href="{% url 'pay_page' %}">оплата</a>
+          </div>
+          <div class="six_block_in_footer">
+            <a href="{% url 'feedback' %}">Обратная связь</a>
+          </div>
+          <div class="six_block_in_footer">
+            <a href="{% url 'contact' %}">Контакты</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="log_in_div">
+      <h2>Вход на сайт</h2>
+      <div class="div">
+        <div class="div_for_form height">
+          <p>Логин</p>
+          <p>Пароль</p>
+        </div>
+        <div class="div_for_form">
+          <form action="#">
+            <input type="text" />
+            <input type="password" />
+            <button>Войти</button>
+          </form>
+        </div>
+      </div>
+      <div class="div_button_for_style">
+        <button><a href="#">Регистрация</a></button>
+        <button class="retail">Забыли пароль?</button>
+      </div>
+      <img
+        src="{% static 'icon/211651_close_round_icon.png' %}"
+        alt="#"
+        class="close"
+      />
+    </div>
+    <div class="one_div">
+      <h2>Забыли пароль?</h2>
+      <div class="div">
+        <div class="div_for_form height"><p>Логин</p></div>
+        <div class="div_for_form">
+          <form action="#">
+            <input type="email" />
+
+            <button>отправить</button>
+          </form>
+        </div>
+      </div>
+
+      <img
+        src="{% static 'icon/211651_close_round_icon.png' %}"
+        alt="#"
+        class="close1"
+      />
+    </div>
+    <div class="blur_bg"></div>
+    <div class="blur_bg1"></div>
+    <script src="{% static 'js/index.js' %}"></script>
+  </body>
+</html>
